@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "Shop Review",
+    "slug": "app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "firebase": {
+        "apiKey": "AIzaSyDL-G6z-p0jLr_Lsjd3Kz-qbHDmwBh8680",
+        "authDomain": "shop-review-fdea2.firebaseapp.com",
+        "projectId": "shop-review-fdea2",
+        "storageBucket": "shop-review-fdea2.appspot.com",
+        "messagingSenderId": "313891506828",
+        "appId": "1:313891506828:web:92d6a1ff3fb77da12889a9",
+        "measurementId": "G-YL168H579J"        
+      }
+    }
+
+  }
+}
