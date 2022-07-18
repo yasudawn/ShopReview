@@ -5,10 +5,11 @@ import { MainTabNavigator } from "./MainTabNavigator";
 /* screens */
 import { AuthScreen } from "../screens/AuthScreen";
 /* contexts */
-//import { UserContext } from "../contexts/userContext";
+import { UserContext } from "../contexts/userContext";
 
 export const AppNavigator = () => {
-  const user = {id:"123"};//useContext(UserContext);
+  //const user = useContext(UserContext);
+  const user = null;
 
   return (
     <NavigationContainer>

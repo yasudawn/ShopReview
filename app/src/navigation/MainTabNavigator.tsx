@@ -30,7 +30,6 @@ export const MainTabNavigator = () => {
         component={UserScreen}
         options={{
             title: 'ユーザ画面',
-            tabBarShowLabel:false,
             tabBarIcon: ({ color, size }) => (
                 <Feather name="user" color={color} size={size} />
             ),

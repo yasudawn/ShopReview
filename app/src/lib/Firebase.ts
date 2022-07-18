@@ -1,14 +1,18 @@
 // firebase 
+import * as firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
-import { initializeAuth } from 'firebase/auth';
+import { getAuth, initializeAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth';
 import { getReactNativePersistence } from 'firebase/auth/react-native';
-import { getFirestore, collection, getDocs, doc,setDoc, Firestore, query, orderBy,where } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, doc,setDoc, Firestore, query, orderBy,where, getDoc } from 'firebase/firestore/lite';
+import 'firebase/auth';
 // 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 // 型
 import { Shop } from "../types/Shop";
+import { User, initialUser } from "../types/user";
 //
 import Constants from "expo-constants"
+import { addDoc, Timestamp } from "firebase/firestore";
 
 let FirebaseApp;
 let db:Firestore;
@@ -23,7 +27,9 @@ const initalizeFirebase = () => {
 initalizeFirebase();
 
 
-  // Firestoreから店データを取得
+//=================================================================
+// Firestoreから店データを取得
+//=================================================================
  export const getShops = async() => {
     const shopsRef = collection(db, 'Shops');
     // スコア順にソート
@@ -35,12 +41,30 @@ initalizeFirebase();
     const MyShops =  snapshot.docs.map(doc => doc.data() as Shop);
     //console.log(MyShops)
     return MyShops;
-
-
-    // 更新テスト
-    // const a=doc(db,"Shops","1");
-    // await setDoc(a, {
-    //   name: "ビストロ品川1号店",
-    //   place: "品川",
-    // });
 }
+
+//=================================================================
+// サインイン
+//=================================================================
+export const signin = async () => {
+  const auth = getAuth();
+  const MyUser = signInAnonymously(auth);
+  const RetUser = (await MyUser).user
+  const uid = RetUser.uid;
+  const usersRef = doc(db, 'Users', uid);
+  const userDoc = await getDoc(usersRef)
+  if (!userDoc.exists()) {
+      const documentRef = await setDoc(usersRef, initialUser);
+      //console.log('a'+SetUser);
+     return {
+       ...initialUser,
+       id: uid,
+     } as User;
+  } else {
+    const doc=userDoc.data()
+    return {
+       id: uid,
+       ...doc
+     } as User;
+  }
+};
