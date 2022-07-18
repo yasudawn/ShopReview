@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, FlatList, SafeAreaView } from "react-native";
+import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
+import { StyleSheet, FlatList, SafeAreaView ,Platform, StatusBar} from "react-native";
 /* lib */
 import { getShops } from "../lib/Firebase";
 /* components */
@@ -9,6 +9,17 @@ import { ShopReviewItem } from "../components/ShopReviewItem";
 import { Shop } from "../types/shop";
 import { StackNavigationProp } from "@react-navigation/stack";
 //import { RootStackParamList } from "../types/navigation";
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: "#fff",
+      alignItems: "center",
+      justifyContent: "center",
+      // Android 対応
+      paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    },
+  });
 
 type Props = {
 //  navigation: StackNavigationProp<RootStackParamList, "Home">;
@@ -42,7 +53,7 @@ export const HomeScreen = ({  }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
+      <ExpoStatusBar style="auto" />
       <FlatList
         data={shops}
         renderItem={({ item }: { item: Shop }) => (
@@ -54,12 +65,3 @@ export const HomeScreen = ({  }: Props) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

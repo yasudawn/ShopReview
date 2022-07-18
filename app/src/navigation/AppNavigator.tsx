@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 /* navigator */
 //import { MainTabNavigator } from "./MainTabNavigator";
 /* screens */
+import { HomeStackNavigator } from "./HomeStackNavigator";
 import { HomeScreen } from "../screens/HomeScreen";
 //import { AuthScreen } from "../screens/AuthScreen";
 /* contexts */

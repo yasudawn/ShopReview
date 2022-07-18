@@ -33,7 +33,7 @@ initalizeFirebase();
     const snapshot = await getDocs(MyQ);
     // 店のデータを取得
     const MyShops =  snapshot.docs.map(doc => doc.data() as Shop);
-    console.log(MyShops)
+    //console.log(MyShops)
     return MyShops;
 
 
