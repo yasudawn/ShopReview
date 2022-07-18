@@ -5,10 +5,9 @@ import { HomeScreen } from "../screens/HomeScreen";
 import { ShopScreen } from "../screens/ShopScreen";
 //import { CreateReviewScreen } from "../screens/CreateReviewScreen";
 /* types */
-//import { RootStackParamList } from "../types/navigation";
+import { RootStackParamList } from "../types/navigation";
 
-const Stack = createStackNavigator();
-//const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 //const RootStack = createStackNavigator<RootStackParamList>();
 
 export const HomeStackNavigator = () => {

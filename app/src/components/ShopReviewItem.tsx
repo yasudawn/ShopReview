@@ -1,6 +1,6 @@
 // Basic Imports
 import React from "react";
-import {View, StyleSheet, Image, Dimensions, Text} from "react-native"
+import {View, StyleSheet, Image, Dimensions, Text ,TouchableOpacity} from "react-native"
 // Types
 import { Shop } from "../types/Shop";
 import { Stars } from "./Stars";
@@ -11,10 +11,6 @@ const CONTAINER_WIDTH = width / 2;
 const PADDING = 16;
 const IMAGE_WIDTH = CONTAINER_WIDTH - PADDING * 2;
 
-// 
-type Props = {
-    shop: Shop;
-};
 //
 const styles = StyleSheet.create ({
     container :{
@@ -39,14 +35,20 @@ const styles = StyleSheet.create ({
 });
 
 // 
-export const ShopReviewItem:React.FC<Props>=({shop}:Props) => {
+type Props = {
+    shop: Shop;
+    onPress: () => void;
+};
+
+// 
+export const ShopReviewItem:React.FC<Props>=({shop, onPress}:Props) => {
     const { name, place, imageUrl, score } = shop;
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onPress}>
             <Image source={{ uri: imageUrl }} style={styles.image} />
             <Text style={styles.nameText}>{name}</Text>
             <Text style={styles.placeText}>{place}</Text>
             <Stars score={score} />
-        </View>
+        </TouchableOpacity>
     );
 }

@@ -4,7 +4,6 @@ import { NavigationContainer } from "@react-navigation/native";
 //import { MainTabNavigator } from "./MainTabNavigator";
 /* screens */
 import { HomeStackNavigator } from "./HomeStackNavigator";
-import { HomeScreen } from "../screens/HomeScreen";
 //import { AuthScreen } from "../screens/AuthScreen";
 /* contexts */
 //import { UserContext } from "../contexts/userContext";
@@ -14,7 +13,7 @@ export const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-        <HomeScreen />
+        <HomeStackNavigator />
     </NavigationContainer>
   );
 };

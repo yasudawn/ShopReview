@@ -8,7 +8,7 @@ import { ShopReviewItem } from "../components/ShopReviewItem";
 /* types */
 import { Shop } from "../types/shop";
 import { StackNavigationProp } from "@react-navigation/stack";
-//import { RootStackParamList } from "../types/navigation";
+import { RootStackParamList } from "../types/navigation";
 
 const styles = StyleSheet.create({
     container: {
@@ -22,11 +22,11 @@ const styles = StyleSheet.create({
   });
 
 type Props = {
-//  navigation: StackNavigationProp<RootStackParamList, "Home">;
+  navigation: StackNavigationProp<RootStackParamList, "Home">;
 };
 
-export const HomeScreen = ({  }: Props) => {
-  const [shops, setShops] = useState<Shop[]>([]);
+export const HomeScreen = ({navigation}:Props ) => {
+        const [shops, setShops] = useState<Shop[]>([]);
 
   useEffect(() => {
     getFirebaseItems();
@@ -40,28 +40,26 @@ export const HomeScreen = ({  }: Props) => {
   }
 
     //---------------------------------------------------------------
-    // 画面表示(未使用)
+    // タップされた時の処理
     //---------------------------------------------------------------  
-    const _renderItem =({item}:{item: Shop}) => {
-        return <ShopReviewItem shop={item}  />
-      }
-    
+    const onPressShop = (shop: Shop) => {
+        navigation.navigate("Shop", { shop });
+    };
 
-  const onPressShop = (shop: Shop) => {
-    // navigation.navigate("Shop", { shop });
-  };
-
-  return (
+    //---------------------------------------------------------------
+    // 画面表示
+    //---------------------------------------------------------------  
+    return (
     <SafeAreaView style={styles.container}>
-      <ExpoStatusBar style="auto" />
-      <FlatList
+        <ExpoStatusBar style="auto" />
+        <FlatList
         data={shops}
         renderItem={({ item }: { item: Shop }) => (
-          <ShopReviewItem shop={item}  />
+            <ShopReviewItem shop={item} onPress={() => onPressShop(item)} />
         )}
         keyExtractor={(item, index) => index.toString()}
         numColumns={2}
-      />
+        />
     </SafeAreaView>
-  );
+    );
 };
