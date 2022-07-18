@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 /* navigator */
 //import { MainTabNavigator } from "./MainTabNavigator";
 /* screens */
-import { HomeStackNavigator } from "./HomeStackNavigator";
+import { MainTabNavigator } from "./MainTabNavigator";
 //import { AuthScreen } from "../screens/AuthScreen";
 /* contexts */
 //import { UserContext } from "../contexts/userContext";
@@ -13,7 +13,7 @@ export const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-        <HomeStackNavigator />
+        <MainTabNavigator />
     </NavigationContainer>
   );
 };
