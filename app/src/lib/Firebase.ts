@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { initializeAuth } from 'firebase/auth';
 import { getReactNativePersistence } from 'firebase/auth/react-native';
-import { getFirestore, collection, getDocs, doc,setDoc, Firestore } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, doc,setDoc, Firestore, query, orderBy,where } from 'firebase/firestore/lite';
 // 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 // 型
@@ -25,8 +25,13 @@ initalizeFirebase();
 
   // Firestoreから店データを取得
  export const getShops = async() => {
-    const shopsCol = collection(db, 'Shops');
-    const snapshot = await getDocs(shopsCol);
+    const shopsRef = collection(db, 'Shops');
+    // スコア順にソート
+    const MyQ = query(shopsRef, orderBy("score", "desc"))
+    //const MyQ = query(shopsRef,where("score", ">=", 4), orderBy("score", "desc"))
+    // スナップショットを取得
+    const snapshot = await getDocs(MyQ);
+    // 店のデータを取得
     const MyShops =  snapshot.docs.map(doc => doc.data() as Shop);
     console.log(MyShops)
     return MyShops;
