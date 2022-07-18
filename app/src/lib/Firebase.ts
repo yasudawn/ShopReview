@@ -28,6 +28,7 @@ initalizeFirebase();
     const shopsCol = collection(db, 'Shops');
     const snapshot = await getDocs(shopsCol);
     const MyShops =  snapshot.docs.map(doc => doc.data() as Shop);
+    console.log(MyShops)
     return MyShops;
 
 

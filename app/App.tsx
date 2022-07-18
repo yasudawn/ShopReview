@@ -1,15 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { useEffect, useState } from 'react';
-// firebase 
-import { initializeApp } from "firebase/app";
-import { initializeAuth } from 'firebase/auth';
-import { getReactNativePersistence } from 'firebase/auth/react-native';
-import { getFirestore, collection, getDocs, doc,setDoc, Firestore } from 'firebase/firestore/lite';
 // 
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import {getShops} from './src/lib/Firebase' 
 import { Shop } from './src/types/Shop';
+import { ShopReviewItem } from './src/components/ShopReviewItem';
 
 // メイン
 export default function App() {
@@ -24,18 +19,25 @@ export default function App() {
     // shopsのステートへ入れる
     setShops(MyShops);
   }
-  //
-  const shopItems = shops.map((shopItem, index) => (
-    <View style={{margin:10}} key={index.toString()}>
-      <Text>{shopItem.name}</Text>
-      <Text>{shopItem.place}</Text>
-    </View>
-  ))
+    //---------------------------------------------------------------
+    // 画面表示
+    //---------------------------------------------------------------  
+  const _renderItem =({item}:{item: Shop}) => {
+    return <ShopReviewItem shop={item}  />
+  }
+
   // 
   return (
     <View style={styles.container}>
-      {shopItems}
       <StatusBar style="auto" />
+      <FlatList
+        data={shops}
+        renderItem={({ item }: { item: Shop }) => (
+          <ShopReviewItem shop={item}  />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={2}
+      />
     </View>
   );
 }
