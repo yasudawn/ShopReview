@@ -50,21 +50,39 @@ export const signin = async () => {
   const auth = getAuth();
   const MyUser = signInAnonymously(auth);
   const RetUser = (await MyUser).user
-  const uid = RetUser.uid;
-  const usersRef = doc(db, 'Users', uid);
+  const userId = RetUser.uid;
+  const usersRef = doc(db, 'Users', userId);
   const userDoc = await getDoc(usersRef)
   if (!userDoc.exists()) {
       const documentRef = await setDoc(usersRef, initialUser);
       //console.log('a'+SetUser);
      return {
        ...initialUser,
-       id: uid,
+       id: userId,
      } as User;
   } else {
     const doc=userDoc.data()
     return {
-       id: uid,
+       id: userId,
        ...doc
      } as User;
   }
 };
+
+//=================================================================
+// ユーザーの更新
+//=================================================================
+export const updateUser = async (userId: string, params: any) => {
+  const usersRef = doc(db, 'Users', userId);
+  const userDoc = await getDoc(usersRef)
+  const documentRef = await setDoc(usersRef, params);
+};
+
+// export const createReviewRef = async (shopId: string) => {
+//   return await firebase
+//     .firestore()
+//     .collection("shops")
+//     .doc(shopId)
+//     .collection("reviews")
+//     .doc();
+// };

@@ -8,12 +8,12 @@ import { AuthScreen } from "../screens/AuthScreen";
 import { UserContext } from "../contexts/userContext";
 
 export const AppNavigator = () => {
-  //const user = useContext(UserContext);
-  const user = null;
+  const {user} = useContext(UserContext);
+  //const user = null;
 
   return (
     <NavigationContainer>
-       {!user ? <AuthScreen />: <MainTabNavigator />}
+       {!user ? <AuthScreen /> : <MainTabNavigator />}
     </NavigationContainer>
   );
 };
