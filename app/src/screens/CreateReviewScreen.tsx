@@ -18,12 +18,13 @@ const styles = StyleSheet.create({
   });
 
 type Props = {
-    navigation: StackNavigationProp<RootStackParamList, "User">;
-    route: RouteProp<RootStackParamList, "User">;
+    navigation: StackNavigationProp<RootStackParamList, "CreateReview">;
+    route: RouteProp<RootStackParamList, "CreateReview">;
 };
 
 // Main
 export const CreateReviewScreen: React.FC<Props> = ({ navigation, route }: Props) => {
+    // 渡されたオブジェクト
     const { shop } = route.params;
 
     useEffect(() => {
