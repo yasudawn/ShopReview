@@ -3,7 +3,7 @@ import * as firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
 import { getAuth, initializeAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth';
 import { getReactNativePersistence } from 'firebase/auth/react-native';
-import { getFirestore, collection, getDocs, doc,setDoc, Firestore, query, orderBy,where, getDoc } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, doc,setDoc, Firestore, query, orderBy,where, getDoc,addDoc,Timestamp, updateDoc } from 'firebase/firestore';
 import 'firebase/auth';
 // 
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -12,7 +12,6 @@ import { Shop } from "../types/Shop";
 import { User, initialUser } from "../types/user";
 //
 import Constants from "expo-constants"
-import { addDoc, Timestamp } from "firebase/firestore";
 
 let FirebaseApp:firebase.FirebaseApp;
 let db:Firestore;
@@ -28,6 +27,20 @@ const initalizeFirebase = () => {
 initalizeFirebase();
 
 
+class DbUser {
+  name: string;
+  updatedAt:Timestamp = Timestamp.now();
+  createdAt:Timestamp = Timestamp.now();
+  constructor (name:string) {
+      this.name = name;
+      //this.updatedAt = Timestamp;
+      //this.createdAt = Timestamp;
+}
+  toString() {
+      return this.name;
+  }
+}
+
 //=================================================================
 // Firestoreから店データを取得
 //=================================================================
@@ -39,7 +52,7 @@ initalizeFirebase();
     // スナップショットを取得
     const snapshot = await getDocs(MyQ);
     // 店のデータを取得
-    const MyShops =  snapshot.docs.map(doc => doc.data() as Shop);
+    const MyShops =  snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id } as Shop));
     //console.log(MyShops)
     return MyShops;
 }
@@ -74,18 +87,24 @@ export const signin = async () => {
 // ユーザーの更新
 //=================================================================
 export const updateUser = async (userId: string, params: any) => {
-  const usersRef = doc(db, 'Users', userId);
-  const userDoc = await getDoc(usersRef);
-  //const doc=userDoc.data();
-
-  const documentRef = await setDoc(usersRef, params);
+    const usersRef = doc(db, 'Users', userId);
+    await updateDoc(usersRef, params);
 };
 
-// export const createReviewRef = async (shopId: string) => {
-//   return await firebase
-//     .firestore()
-//     .collection("shops")
-//     .doc(shopId)
-//     .collection("reviews")
-//     .doc();
-// };
+//=================================================================
+// レビューの投稿
+//=================================================================
+export const createReviewRef = async (shopId: string) => {
+  const shopRef = doc(db, 'Shops', shopId);
+  const shopDoc = await getDoc(shopRef);
+  try {
+    //await setDoc(doc(shopRef, 'Reviews',"1"), initialUser);
+    return await addDoc(collection(shopRef, 'Reviews'),{});
+  } catch (err) {
+    alert(err)
+  }
+  //console.log(reviewDoc);
+  return null;
+
+  //return reviewDoc;
+};
