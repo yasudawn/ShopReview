@@ -14,9 +14,10 @@ import { User, initialUser } from "../types/user";
 import Constants from "expo-constants"
 import { addDoc, Timestamp } from "firebase/firestore";
 
-let FirebaseApp;
+let FirebaseApp:firebase.FirebaseApp;
 let db:Firestore;
 const initalizeFirebase = () => {
+  if(!(FirebaseApp === void 0)) {return;}
   // Initialize Firebase
   FirebaseApp = initializeApp(Constants.manifest!.extra!.firebase);
   initializeAuth(FirebaseApp, {
@@ -74,7 +75,9 @@ export const signin = async () => {
 //=================================================================
 export const updateUser = async (userId: string, params: any) => {
   const usersRef = doc(db, 'Users', userId);
-  const userDoc = await getDoc(usersRef)
+  const userDoc = await getDoc(usersRef);
+  //const doc=userDoc.data();
+
   const documentRef = await setDoc(usersRef, params);
 };
 
