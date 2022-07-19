@@ -11,6 +11,7 @@ import { RootStackParamList } from "../types/navigation";
 import { RouteProp } from "@react-navigation/native";
 /* contexts */
 import { UserContext } from "../contexts/userContext";
+import { Timestamp } from "firebase/firestore";
 
 // Style
 const styles = StyleSheet.create({
@@ -40,7 +41,8 @@ export const UserScreen: React.FC<Props> = ({ navigation, route }: Props) => {
         if(!user) {return;}
         // ローディング中を表示
         setLoading(true);
-        const updatedAt = "";
+        
+        const updatedAt:Timestamp = Timestamp.now();
         await updateUser(user.id || "", { name, updatedAt });
         setUser({ ...user, name, updatedAt });
         // ローディング中を非表示
