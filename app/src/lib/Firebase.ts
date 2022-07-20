@@ -13,6 +13,7 @@ import { Shop } from "../types/Shop";
 import { User, initialUser } from "../types/user";
 //
 import Constants from "expo-constants"
+import { Review } from "../types/review";
 
 let FirebaseApp:firebase.FirebaseApp;
 let db:Firestore;
@@ -111,7 +112,7 @@ export const createReviewRef = async (shopId: string) => {
 };
 
 //=================================================================
-// 画像をFirebase storageにアップロード
+// 画像をFirebase storageにアップロード 途中
 //=================================================================
 export const uploadImage = async (uri: string, path: string) => {
   // uriをblogに変換
@@ -134,3 +135,13 @@ export const uploadImage = async (uri: string, path: string) => {
   return downloadUrl;
 };
 
+//=================================================================
+// レビューの一覧を取得
+//=================================================================
+export const getReviews = async (shopId: string) => {
+  const shopRef = doc(db, 'Shops', shopId);
+  const reviewCol = collection(shopRef, 'Reviews')
+  const reviewQ =  query(reviewCol, orderBy("createdAt", "desc"))
+  const reviewDocs = await getDocs(reviewQ);
+  return reviewDocs.docs.map((doc) => ({ ...doc.data(), id: doc.id } as Review));
+};
