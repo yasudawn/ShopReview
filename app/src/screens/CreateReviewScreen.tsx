@@ -67,11 +67,13 @@ export const CreateReviewScreen: React.FC<Props> = ({ navigation, route }: Props
         const reviewDocRef = await createReviewRef(shop.id!);
         //
         if(reviewDocRef) {
-            // storageのpathを決定
-            const ext = getExtension(imageUri!);
-            const storagePath = `reviews/${reviewDocRef.id}.${ext}`;
-            // 画像をstorageにアップロード
-            const downloadUrl = await uploadImage(imageUri!, storagePath);
+            if (imageUri) {
+                // storageのpathを決定
+                const ext = getExtension(imageUri!);
+                const storagePath = `reviews/${reviewDocRef.id}.${ext}`;
+                // 画像をstorageにアップロード
+                //const downloadUrl = await uploadImage(imageUri!, storagePath);
+            }
             // レビュードキュメントの作成
             const review = {
                 id: reviewDocRef.id,
@@ -94,6 +96,8 @@ export const CreateReviewScreen: React.FC<Props> = ({ navigation, route }: Props
         }
         // ロード中を非表示
         setLoading(false);
+        // 戻る
+        navigation.goBack();
     }
 
     // 画像選択

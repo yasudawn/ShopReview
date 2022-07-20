@@ -47,6 +47,12 @@ export const ShopScreen: React.FC<Props> = ({navigation, route}:Props) => {
             const MyReviews = await getReviews(shop.id!);
             setReviews(MyReviews);
         };
+
+        // 再描画
+        //-----------------------------------------------------------
+        const willFocusSubscription = navigation.addListener('focus', () => {
+            fetchReviews();
+        })
         fetchReviews();
     },[shop]);
 
@@ -55,12 +61,11 @@ export const ShopScreen: React.FC<Props> = ({navigation, route}:Props) => {
     //---------------------------------------------------------------  
     return (
         <SafeAreaView style={styles.container}>
-            {/* <ShopDetail shop={shop} /> */}
             <FlatList
                 ListHeaderComponent={<ShopDetail shop={shop} />}
                 data={reviews}
                 renderItem={({ item }) => <ReviewItem review={item} />}
-                keyExtractor={(item,index) => item.id}
+                keyExtractor={(item) => item.id!}
               />
             <FloatingActionButton iconName="plus" onPress={() => navigation.navigate("CreateReview", { shop })} />
         </SafeAreaView>
