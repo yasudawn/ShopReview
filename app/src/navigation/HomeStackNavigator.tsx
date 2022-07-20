@@ -1,4 +1,4 @@
-import React, { ComponentProps } from "react";
+import React from "react";
 import { createStackNavigator,TransitionPresets } from "@react-navigation/stack";
 /* screens */
 import { HomeScreen } from "../screens/HomeScreen";
