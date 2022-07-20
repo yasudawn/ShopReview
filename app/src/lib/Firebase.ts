@@ -1,10 +1,11 @@
 // firebase 
 import * as firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
-import { getAuth, initializeAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth';
+import { getAuth, initializeAuth, signInAnonymously } from 'firebase/auth';
 import { getReactNativePersistence } from 'firebase/auth/react-native';
-import { getFirestore, collection, getDocs, doc,setDoc, Firestore, query, orderBy,where, getDoc,addDoc,Timestamp, updateDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc,setDoc, Firestore, query, orderBy, getDoc,addDoc,Timestamp, updateDoc } from 'firebase/firestore';
 import 'firebase/auth';
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 // 
 import AsyncStorage from "@react-native-async-storage/async-storage"
 // 型
@@ -108,3 +109,28 @@ export const createReviewRef = async (shopId: string) => {
 
   //return reviewDoc;
 };
+
+//=================================================================
+// 画像をFirebase storageにアップロード
+//=================================================================
+export const uploadImage = async (uri: string, path: string) => {
+  // uriをblogに変換
+  const localUri = await fetch(uri);
+  const file = await localUri.blob();
+  // Create a root reference
+  const storage = getStorage();
+  // storageにupload
+  const storageRef = ref(storage, uri);
+
+  let downloadUrl = "";
+  try {
+    uploadBytes(storageRef, file).then((snapshot) => {
+      console.log('Uploaded a blob or file!');
+      console.log(snapshot);
+    });
+  } catch (err) {
+    console.log(OverconstrainedError);
+  }
+  return downloadUrl;
+};
+
