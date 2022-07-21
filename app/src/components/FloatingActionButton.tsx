@@ -1,30 +1,19 @@
+//===================================================================
+// フローティングボタンコンポーネント
+//===================================================================
+// インポート
+//===================================================================
 import React, { ComponentProps } from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  GestureResponderEvent,
-} from "react-native";
+import {StyleSheet, TouchableOpacity, GestureResponderEvent,} from "react-native";
 import { Feather } from "@expo/vector-icons";
 type GlyphNames = ComponentProps<typeof Feather>['name'];
-
+//===================================================================
+// 固定値定義
+//===================================================================
 const SIZE = 56;
-
-type Props = {
-  iconName: GlyphNames;
-  onPress: (event: GestureResponderEvent) => void;
-};
-
-export const FloatingActionButton: React.FC<Props> = ({
-  iconName,
-  onPress,
-}: Props) => {
-  return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Feather name={iconName} color="#fff" size={30} />
-    </TouchableOpacity>
-  );
-};
-
+//===================================================================
+// スタイルシート
+//===================================================================
 const styles = StyleSheet.create({
   container: {
     width: SIZE,
@@ -38,3 +27,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+//===================================================================
+// 引数定義
+//===================================================================
+type Props = {
+  iconName: GlyphNames;
+  onPress: (event: GestureResponderEvent) => void;
+};
+
+//===================================================================
+// メイン処理
+//===================================================================
+export const FloatingActionButton: React.FC<Props> = ({
+  iconName,
+  onPress,
+}: Props) => {
+  return (
+    <TouchableOpacity style={styles.container} onPress={onPress}>
+      <Feather name={iconName} color="#fff" size={30} />
+    </TouchableOpacity>
+  );
+};
+

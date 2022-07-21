@@ -1,15 +1,21 @@
+//===================================================================
+// インポート
+//===================================================================
 import React, { useEffect, useState } from "react";
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import { StyleSheet, FlatList, SafeAreaView ,Platform, StatusBar} from "react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../types/navigation";
 /* lib */
 import { getShops } from "../lib/Firebase";
 /* components */
 import { ShopReviewItem } from "../components/ShopReviewItem";
 /* types */
 import { Shop } from "../types/shop";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types/navigation";
 
+//===================================================================
+// スタイルシート
+//===================================================================
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -21,12 +27,16 @@ const styles = StyleSheet.create({
     },
   });
 
+//===================================================================
+// 表示画面
+//===================================================================
+// 受け渡すパラメータの型定義
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Home">;
 };
-
+// メイン処理
 export const HomeScreen = ({navigation}:Props ) => {
-        const [shops, setShops] = useState<Shop[]>([]);
+  const [shops, setShops] = useState<Shop[]>([]);
 
   useEffect(() => {
     getFirebaseItems();
@@ -53,12 +63,12 @@ export const HomeScreen = ({navigation}:Props ) => {
     <SafeAreaView style={styles.container}>
         <ExpoStatusBar style="auto" />
         <FlatList
-        data={shops}
-        renderItem={({ item }: { item: Shop }) => (
-            <ShopReviewItem shop={item} onPress={() => onPressShop(item)} />
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        numColumns={2}
+          data={shops}
+          renderItem={({ item }: { item: Shop }) => (
+              <ShopReviewItem shop={item} onPress={() => onPressShop(item)} />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          numColumns={2}
         />
     </SafeAreaView>
     );

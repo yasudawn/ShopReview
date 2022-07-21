@@ -1,3 +1,6 @@
+//===================================================================
+// インポート
+//===================================================================
 import React from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";

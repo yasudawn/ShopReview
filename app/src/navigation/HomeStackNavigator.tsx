@@ -1,3 +1,6 @@
+//===================================================================
+// インポート
+//===================================================================
 import React from "react";
 import { createStackNavigator,TransitionPresets } from "@react-navigation/stack";
 /* screens */
@@ -7,7 +10,7 @@ import { CreateReviewScreen } from "../screens/CreateReviewScreen";
 /* types */
 import { RootStackParamList } from "../types/navigation";
 
-
+//
 const Stack = createStackNavigator<RootStackParamList>();
 const ModalStack = createStackNavigator<RootStackParamList>();
 
